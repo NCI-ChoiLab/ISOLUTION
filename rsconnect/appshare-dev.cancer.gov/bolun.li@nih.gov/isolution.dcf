@@ -1,0 +1,12 @@
+name: isolution
+title: ISOLUTION
+username: bolun.li@nih.gov
+account: bolun.li@nih.gov
+server: appshare-dev.cancer.gov
+hostUrl: https://appshare-dev.cancer.gov/__api__
+appId: 334
+bundleId:
+url: https://appshare-dev.cancer.gov/ISOLUTION/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

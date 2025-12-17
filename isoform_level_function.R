@@ -18,6 +18,7 @@ Nominal_combined <- readRDS("data/Nominal_combined.rds")
 Isoform_info <- readRDS("data/Isoform_info.rds")
 genotypes <- readRDS("data/genotypes.rds")
 df_transcript_catalog <- readRDS(file = "data/df_transcript_catalog.rds")
+transcript_list <- readRDS(file = "data/transcript_list.rds")
 # save data
 # for (celltype in names(expr_list)) {
 #   rds <- expr_list[[celltype]]
@@ -115,7 +116,8 @@ plot_top_isoforms_by_ct <- function(gene_id, ntop = 4){
     geom_point(
       position = position_jitterdodge(0.5, dodge.width = .8),
       alpha = 0.8
-    )+ylab("Normalized expression")+xlab("")
+    )+ylab("Normalized expression")+xlab("")+
+    ggtitle(paste0("Top ", ntop, " isoforms within ",gene_id , " across cell types"))
   return(p)
 }
 
@@ -156,7 +158,7 @@ isoQTL_plot_pub <- function(celltype,
                 method='lm', size = 1, se =TRUE,fill = alpha("gray", .5) ) +
     labs(title="",x=rs, y = paste0("Count of ", transcript))+
     scale_color_manual(values=wes_palette(n=3, name="GrandBudapest1")) +
-    ggtitle(paste0(celltype, "\n",transcript_name ,  rs, ": ", paste(snp_info[rs,1], snp_info[rs,3], snp_info[rs,5], snp_info[rs,4], "b38", sep = "_")))+
+    ggtitle(paste0(celltype, "\n",transcript_name , ":",  rs, ": ", paste(snp_info[rs,1], snp_info[rs,3], snp_info[rs,5], snp_info[rs,4], "b38", sep = "_")))+
     theme(axis.text.x = element_text(color = "black", size = 12,face = "plain"),
           axis.text.y = element_text(color = "black", size = 12,face = "plain"),  
           axis.title.x = element_text(color = "black", size = 16, face = "plain"),

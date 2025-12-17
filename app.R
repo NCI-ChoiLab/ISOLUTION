@@ -8,6 +8,7 @@ library(hrbrthemes)
 library(plotly)
 library(scales)
 source("isoform_level_function.R")
+options(shiny.sanitize.errors = TRUE)
 shinyApp(
   shinyUI(
     fluidPage(list(
@@ -20,7 +21,19 @@ shinyApp(
         tabPanel("isoQTL", uiOutput('page2')),
         tabPanel("Isoform Structure", uiOutput('page4')),
         footer = shiny::includeHTML("footer.html")
-      )
+      ),
+      
+      tags$style(HTML(" 
+        .navbar-default .navbar-brand {color: #1d406c;font-weight: bold}
+        .navbar-default .navbar-nav > .active > a,
+        .navbar-default .navbar-nav > .active > a:focus,
+        .navbar-default .navbar-nav > .active > a:hover {color: black;background-color: white; !important} 
+        .navbar-default .navbar-nav > li > a:hover {color: black;text-decoration:underline;}
+        .navbar-default .navbar-nav > li > a[data-value='Introduction'] {color: #1d406c;}
+        .navbar-default .navbar-nav > li > a[data-value='Isoform Expression'] {color: #1d406c;}
+        .navbar-default .navbar-nav > li > a[data-value='isoQTL'] {color: #1d406c;}
+        .navbar-default .navbar-nav > li > a[data-value='Isoform Structure'] {color: #1d406c;}
+                  "))
   ))
     
   ),
@@ -53,13 +66,21 @@ shinyApp(
         full-splice-match (FSM), incomplete-splice-match (ISM), novel-in-catalog (NIC), novel-not-in-catalog (NNC), antisense, fusion, genic genomic and intergenic.
           We also provide the annotation file (.gtf) of the gene for downloading.", noWS=TRUE),
         p("If you use ISOLUTION, please cite the following paper:"),
+        p("Li B, Luong T, Sisay E, Yin J, Zhang Z, Vaziripour M, Shin JH, Zhao Y, Byun J, Li Y, Lee CH, O'Neil M, Andresson T, Chang YS, Landi MT, Rothman N, Long E, Lan Q, Amos C, Zhou AX, Zhang T, Lee JG, Shi J, Xia J, Mancuso N, Zhang H, Kim EY, Choi J*. 
+          Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. 2025")
       )
     })
     output$gene_id_trans <- renderText({
+      shiny::validate(
+        need(input$gene_name %in% c(unique(Isoform_info$annot_gene_name),""), "Gene symbol is not found in our data. Please check if there is a typo and try again.")
+      )
       searched_id <- unique(Isoform_info$annot_gene_id[which(input$gene_name == Isoform_info$annot_gene_name)])
       paste0("Ensemble ID for ", input$gene_name, ": ", searched_id)
     })
     output$list_isoforms <- renderText({
+      shiny::validate(
+        need(input$gene_name %in% c(unique(Isoform_info$annot_gene_name),""), "")
+      )
       isoform_id_list <- unique(Isoform_info$annot_transcript_id[which(input$gene_name == Isoform_info$annot_gene_name)])
       paste0(length(isoform_id_list), " isoform(s) in total within ", input$gene_name, "\n", paste(isoform_id_list, collapse = ","))
     })
@@ -68,7 +89,7 @@ shinyApp(
         sidebarPanel(
           textInput("gene_id", label=h3("Input gene ID:"),value="ENSG00000149021"),
           hr(),
-          textInput("ntop", label=h3("Input the number of isoforms to check:"),value= "4"),
+          textInput("ntop", label=h3("Number of top isoforms to check (input an integer between 1-4):"),value= "4"),
           hr(),
           selectInput("celltype2",label=h3("Select cell type for checking all isoform composition:"),
                              choices = c("AT2"="AT2",
@@ -106,20 +127,29 @@ shinyApp(
                                             "Mesothelium" = "Mesothelium"),
                              selected = "AT1"
                       ),
-          submitButton("Submit")
+          actionButton("Submit",label = "Submit")
         ),
         mainPanel(
           plotlyOutput("plot2",width = 1000,height = 400),
-          h3("Top isoforms across cell types"),
+          br(),
           plotlyOutput("plot1",width = 1000,height = 2100)
         )
       )
     })
     output$plot1 <- renderPlotly({
+      input$Submit
+      shiny::validate(
+        need(input$gene_id %in% unique(Isoform_info$annot_gene_id), ""),
+        need(as.numeric(input$ntop) < 5, "For better visualization, we recommend you to use a number less than 5.")
+      )
       p <- plot_top_isoforms_by_ct(gene_id = input$gene_id, ntop = as.numeric(input$ntop))
       ggplotly(p, width = 1000, height = 510*as.numeric(input$ntop))
     })
     output$plot2 <- renderPlotly({
+      input$Submit
+      shiny::validate(
+        need(input$gene_id %in% unique(Isoform_info$annot_gene_id), "Gene is not found in our data. Please check if it is correct and we recommend you use the ID search in Introduction page.")
+      )
       p <- isoform_dist_plot(gene_id = input$gene_id, celltype = input$celltype2)
       ggplotly(p, width = 1200, height = 400)
     })
@@ -129,7 +159,7 @@ shinyApp(
         sidebarPanel(
           textInput("rs", label=h3("Input RS number:"),value="rs1853148"),
           hr(),
-          textInput("transcript", label=h3("Input transcript id:"),value="TALONT003150695"),
+          textInput("transcript", label=h3("Input isoform id:"),value="TALONT003150695"),
           hr(),
           selectInput("celltype1",label=h3("Select cell type:"),
                              choices = list("AT2"="AT2",
@@ -167,7 +197,7 @@ shinyApp(
                                             "Mesothelium" = "Mesothelium"),
                              selected = c("Multiciliated")
                       ),
-          submitButton("Submit")
+          actionButton("SubmitP2",label = "Submit")
         ),
         mainPanel(
           plotlyOutput("plot3",width = 800,height = 700),
@@ -183,11 +213,22 @@ shinyApp(
     })
     
     output$plot3 <- renderPlotly({
+      input$SubmitP2
+      shiny::validate(
+        need(input$transcript %in% transcript_list, "Please check if the isoform id is correct. ISOLUTION would appreciate using an isoforms id listed in ID search of Introduction page."),
+        need(input$rs %in% snp_info$rsid, "The variant is not an isoQTL in Li et al.")
+      )
+      input$SubmitP2
       p <- isoQTL_plot_pub(celltype = input$celltype1, rs = input$rs, transcript = input$transcript)
       ggplotly(p)
     })
     
     output$plot4 <- renderPlotly({
+      shiny::validate(
+        need(input$transcript %in% transcript_list, ""),
+        need(input$rs %in% snp_info$rsid, "")
+      )
+      input$SubmitP2
       p <- isoQTL_plot_pub(celltype = input$celltype1, rs = input$rs, transcript = input$transcript, return_count = TRUE)
       ggplotly(p[[1]])
     })
@@ -217,9 +258,12 @@ shinyApp(
       )
     })
     output$plot.ui <- renderUI({
-      searched_id <- unique(Isoform_info$annot_gene_id[which(input$gene_name == Isoform_info$annot_gene_name)])
-      ison <- plot_isoform_structure(gene_id_of_interest = searched_id)$iso_n
-      plotOutput("plot5", width = 1200, height = (400+ison*10))
+      tryCatch({
+        searched_id <- unique(Isoform_info$annot_gene_id[which(input$gene_name == Isoform_info$annot_gene_name)])
+        ison <- plot_isoform_structure(gene_id_of_interest = searched_id)$iso_n
+        plotOutput("plot5", width = 1200, height = (400+ison*10))
+      }, error = function(e){"Please enter a valid gene symbol in Introduction page."})
+
     })
     
     output$plot5 <- renderPlot({
