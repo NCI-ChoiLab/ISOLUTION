@@ -61,7 +61,13 @@ shinyApp(
       tagList(
         h1("Welcome to ISOLUTION-SE!"),
         p(em("New update of ISOLUTION (Mar-10-2026): Cell barcode matched short-read eQTL results were added!")),
-        p("ISOLUTION-SE is a single-cell lung isoform-level QTL and gene-level QTL dataset using long-read and short-read RNA sequencing of cell barcode-matched samples. The dataset was generated using the same cDNA libraries from tumor-distant lung tissues of 129 Korean never-smoking women with cell-type balancing, enriching epithelial cells. Single-cell analyses were performed independently for each dataset, which showed highly consistent cell type annotation and gene-level expression. On this website, we provide a searchable portal and visualization for the isoform and gene expression, and QTL results across lung cell types. Long-read and short-read data are accessible under two main tabs, ISOLUTION and Short-read eQTL. ISOLUTION part includes three functions visualizing: (1) Exon and splice site structure of isoforms within a gene detected in our dataset, with a genome annotation GTF file provided; (2) Isoform-level expression across cell types; and (3) Allelic effects of isoQTL along with summary statistics. Short-read eQTL part includes two functions: (1) Visualize gene expression across cell types at the single-cell level, and (2) Visualize allelic effects of eQTL along with summary statistics."),
+        p("ISOLUTION-SE is a single-cell lung isoform-level QTL and gene-level QTL dataset using long-read and short-read RNA sequencing of cell barcode-matched samples. 
+          The dataset was generated using the same cDNA libraries from tumor-distant lung tissues of 129 Korean never-smoking women with cell-type balancing, enriching epithelial cells. 
+          Single-cell analyses were performed independently for each dataset, which showed highly consistent cell type annotation and gene-level expression. 
+          On this website, we provide a searchable portal and visualization for the isoform and gene expression, and QTL results across lung cell types. Long-read and short-read data are accessible under two main tabs, ISOLUTION and Short-read eQTL. 
+          ISOLUTION part includes three functions visualizing: (1) Exon and splice site structure of isoforms within a gene detected in our dataset, with a genome annotation GTF file provided; 
+          (2) Isoform-level expression across cell types; and (3) Allelic effects of isoQTL along with summary statistics. Short-read eQTL part includes two functions: 
+          (1) Visualize gene expression across cell types at the single-cell level, and (2) Visualize allelic effects of eQTL along with summary statistics."),
         h2("ISOLUTION"),
         
         p("The functions of ", strong(em("Isoform Structure", .noWS = c("after")), .noWS = c("after")), ", ", 
