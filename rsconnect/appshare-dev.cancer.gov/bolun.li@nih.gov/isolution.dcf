@@ -5,7 +5,7 @@ account: bolun.li@nih.gov
 server: appshare-dev.cancer.gov
 hostUrl: https://appshare-dev.cancer.gov/__api__
 appId: 334
-bundleId:
+bundleId: 1821
 url: https://appshare-dev.cancer.gov/ISOLUTION/
 version: 1
 asMultiple: FALSE
