@@ -95,9 +95,8 @@ shinyApp(
         p("Using the eQTL function, you can query significant eQTLs for the SNP and genes of your interest in a specific lung cell type (33 cell types). Allelic box plots (median, IQR, 1.5*IQR), a summary of all significant SNPs for the queried gene, and a summary of all the significant eQTLs for the queried SNP for any gene in any lung cell type are provided. We filtered out lowly expressed genes and genes not within +/- 1MB of a tested SNP. Thus, if there is no output, it means we did not use it for eQTL mapping. For the variants, rs ID should be provided. For variants without an assigned rs ID, please use chr:pos in hg38 (e.g., chr1:145830810)."),
         h3("Citation"),
         p("If you use ISOLUTION-SE, please cite the following papers:"),
-        p("Li B, Luong T, Sisay E, Yin J, Zhang Z, Vaziripour M, Shin JH, Zhao Y, Byun J, Li Y, Lee CH, O'Neil M, Andresson T, Chang YS, Gazal S, Landi MT, Rothman N, Long E, Lan Q, Amos C, Zhou AX, Zhang T, Lee JG, Shi J, Mancuso N, Xia J, Zhang H, Kim EY, Choi J*. 
-          Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. 2025"),
-        p('Luong T, Yin J, Li B, Shin JH, Sisay E, Mikhail S, Qin F, Anyaso-Samuel S, Kane A, Golden A, Liu J, Zhang Z, Chang YS, Byun J, Han Y, Landi MT, Gazal S, Mancuso N, Banovich N, Rothman N, Amos C, Lan Q, Yu K, Zhang T, Long E, Shi J, Lee JG, Kim EY, Choi J*. Single-cell lung eQTL dataset of Asian never-smokers highlights the roles of alveolar cells in lung cancer etiology. 2026')
+        p("Li, B. et al. Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. bioRxiv (2026) doi:10.64898/2026.03.27.714873."),
+        p('Luong, T. et al. Single-cell lung eQTL dataset of Asian never-smokers highlights the roles of alveolar cells in lung cancer etiology. bioRxiv (2026) doi:10.64898/2026.03.26.714500.')
       )
     })
 
