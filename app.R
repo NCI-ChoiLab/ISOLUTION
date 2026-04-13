@@ -96,7 +96,8 @@ shinyApp(
         h3("Citation"),
         p("If you use ISOLUTION-SE, please cite the following papers:"),
         p("Li, B. et al. Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. bioRxiv (2026) doi:10.64898/2026.03.27.714873."),
-        p('Luong, T. et al. Single-cell lung eQTL dataset of Asian never-smokers highlights the roles of alveolar cells in lung cancer etiology. bioRxiv (2026) doi:10.64898/2026.03.26.714500.')
+        p('Li, B. et al. Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. bioRxiv (2026) doi:', a(href="https://doi.org/10.64898/2026.03.27.714873", '10.64898/2026.03.27.714873.', .noWS = c("before","after")))
+        p('Luong, T. et al. Single-cell lung eQTL dataset of Asian never-smokers highlights the roles of alveolar cells in lung cancer etiology. bioRxiv (2026) doi:', a(href="https://doi.org/10.64898/2026.03.26.714500", '10.64898/2026.03.26.714500.', .noWS = c("before","after")))
       )
     })
 
