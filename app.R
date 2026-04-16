@@ -95,8 +95,7 @@ shinyApp(
         p("Using the eQTL function, you can query significant eQTLs for the SNP and genes of your interest in a specific lung cell type (33 cell types). Allelic box plots (median, IQR, 1.5*IQR), a summary of all significant SNPs for the queried gene, and a summary of all the significant eQTLs for the queried SNP for any gene in any lung cell type are provided. We filtered out lowly expressed genes and genes not within +/- 1MB of a tested SNP. Thus, if there is no output, it means we did not use it for eQTL mapping. For the variants, rs ID should be provided. For variants without an assigned rs ID, please use chr:pos in hg38 (e.g., chr1:145830810)."),
         h3("Citation"),
         p("If you use ISOLUTION-SE, please cite the following papers:"),
-        p("Li, B. et al. Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. bioRxiv (2026) doi:10.64898/2026.03.27.714873."),
-        p('Li, B. et al. Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. bioRxiv (2026) doi:', a(href="https://doi.org/10.64898/2026.03.27.714873", '10.64898/2026.03.27.714873.', .noWS = c("before","after")))
+        p('Li, B. et al. Single-cell full-length transcriptome of human lung reveals genetic effects on isoform regulation beyond gene-level expression. bioRxiv (2026) doi:', a(href="https://doi.org/10.64898/2026.03.27.714873", '10.64898/2026.03.27.714873.', .noWS = c("before","after"))),
         p('Luong, T. et al. Single-cell lung eQTL dataset of Asian never-smokers highlights the roles of alveolar cells in lung cancer etiology. bioRxiv (2026) doi:', a(href="https://doi.org/10.64898/2026.03.26.714500", '10.64898/2026.03.26.714500.', .noWS = c("before","after")))
       )
     })
