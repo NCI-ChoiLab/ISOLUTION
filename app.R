@@ -99,7 +99,7 @@ shinyApp(
         p('Luong, T. et al. Single-cell lung eQTL dataset of Asian never-smokers highlights the roles of alveolar cells in lung cancer etiology. bioRxiv (2026) doi:', a(href="https://doi.org/10.64898/2026.03.26.714500", '10.64898/2026.03.26.714500.', .noWS = c("before","after")))
       )
     })
-
+# test changes
     output$gene_id_trans <- renderText({
       shiny::validate(
         need(input$gene_name %in% c(unique(Isoform_info$annot_gene_name),""), "Gene symbol is not found in our data. Please check if there is a typo or other gene symbol names, and try again.")
